@@ -1,0 +1,3 @@
+Automated Garden based on rasberrypi
+
+ongoing project...
