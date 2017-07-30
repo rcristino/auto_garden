@@ -9,19 +9,19 @@ class Pump:
         self.duration = duration
         self.setup()
 
-    def setup(self):
-        GPIO.setup(self.pin, GPIO.OUT)   # Set pin mode is output
-        GPIO.output(self.pin, GPIO.HIGH) # Set pin high(+3.3V) to off
-        print("pump INITª + self.pin)
-
     def destroy(self):
         GPIO.output(self.pin, GPIO.HIGH)     # pump off
         GPIO.cleanup() 
-        print("pump DESTROY + self.pin)
+        print("pump DESTROY: " + str(self.pin))
 
-    def execute():
-        print("pump ONª + self.pin)
+    def setup(self):
+        GPIO.setup(self.pin, GPIO.OUT)   # Set pin mode is output
+        GPIO.output(self.pin, GPIO.HIGH) # Set pin high(+3.3V) to off
+        print("pump INIT: " + str(self.pin))
+
+    def execute(self):
+        print("pump ON: " + str(self.pin))
         GPIO.output(self.pin, GPIO.LOW)  # pump on
         time.sleep(self.duration)
-        print("pump OFFª + self.pin)
+        print("pump OFF: " + str(self.pin))
         GPIO.output(self.pin, GPIO.HIGH) # pump off
