@@ -1,0 +1,30 @@
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title.title }} - {{ cdate.cdate }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% else %}
+    <title>Error - service unvailable!</title>
+    {% endif %}
+  </head>
+  <body>
+    <h1>Auto-Garden watering system</h1>
+    <h2><div><p>Current time: <b>{{ cdate.cdate }}</b></p> 
+        <p>Pump Status: <b>{{ current.pump }}</b></p> 
+        <p>Moisture level: <b>{{ current.moisture }}</b></p>
+    </div></h2>
+    <hr>
+    {% for record in records %}
+    <div><p>Moisture level: <b>{{ record.moisture }}</b> 
+        Time: <b>{{ record.timestamp }}</b></p>
+    </div>
+    {% endfor %}
+    <p>
+     {% if current.pump %}
+    <input class="button" type="button" name="PUMP" value="STOP PUMP"
+        onclick="self.location.href='http://localhost:5000/index'">
+    {% else %}
+    <input class="button" type="button" name="PUMP" value="START PUMP"
+        onclick="self.location.href='http://localhost:5000/pump'">
+    {% endif %}
+</html>
