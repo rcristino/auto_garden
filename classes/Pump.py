@@ -11,7 +11,6 @@ class Pump:
 
     def destroy(self):
         GPIO.output(self.pin, GPIO.HIGH)     # pump off
-        GPIO.cleanup() 
         print("pump DESTROY: " + str(self.pin))
 
     def setup(self):
