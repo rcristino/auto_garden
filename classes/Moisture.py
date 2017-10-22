@@ -4,6 +4,8 @@ import time
 
 class Moisture:
 
+    moisty = False
+
     def __init__(self, pin):
         self.pin = pin
         self.setup()
@@ -16,11 +18,17 @@ class Moisture:
         GPIO.setup(self.pin, GPIO.IN)   # Set pin mode is input
         # get input from gpio pin when the pin goes HIGH or LOW
         GPIO.add_event_detect(self.pin, GPIO.BOTH, bouncetime=300)
-        GPIO.add_event_callback(self.pin, self.callback)
+        GPIO.add_event_callback(self.pin, self.checkMoisture)
+        self.checkMoisture(self.pin)
         print("moisture INIT: " + str(self.pin))
 
-    def callback(self, pin):
+    def checkMoisture(self, pin):
         if GPIO.input(pin):
-            print("moisture DETECTED: " + str(self.pin)) 
-        else:
             print("moisture NOT DETECTED: " + str(self.pin)) 
+            self.moisty = False
+        else:
+            print("moisture DETECTED: " + str(self.pin)) 
+            self.moisty = True
+
+    def isMoisty(self):
+        return self.moisty
