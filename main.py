@@ -13,18 +13,18 @@ if __name__ == '__main__':     # Program start from here
 
     mgrGPIO = ManagerGPIO()
     pumpA = Pump(11, 3) # pin and duration
-    moistA = Moisture(13) # pin
+    moist1 = Moisture(13) # pin
     try:
         #while True:
 
         #pumpA.execute()
-        
+
         time.sleep(5) # for testing
 
         pumpA.destroy()
-        moistA.destroy()
+        moist1.destroy()
         mgrGPIO.destroy()
     except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
         pumpA.destroy()
-        moistA.destroy()
+        moist1.destroy()
         mgrGPIO.destroy()
