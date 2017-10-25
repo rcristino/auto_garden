@@ -30,7 +30,7 @@ if __name__ == '__main__':     # Program start from here
     moist1 = Moisture(13) # pin
     try:
         while True:
-            if moist1.isMoisty():                
+            if not moist1.isMoisty():                
                 pumpA.execute()
 
             time.sleep(300) # check again after 5 minutes
