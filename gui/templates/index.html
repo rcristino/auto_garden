@@ -22,9 +22,9 @@
     <p>
      {% if current.pump %}
     <input class="button" type="button" name="PUMP" value="STOP PUMP"
-        onclick="self.location.href='http://localhost:5000/index'">
+        onclick="self.location.href='http://{{ addr.ip }}:{{ addr.port }}/index'">
     {% else %}
     <input class="button" type="button" name="PUMP" value="START PUMP"
-        onclick="self.location.href='http://localhost:5000/pump'">
+        onclick="self.location.href='http://{{ addr.ip }}:{{ addr.port }}/pump'">
     {% endif %}
 </html>
