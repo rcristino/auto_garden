@@ -2,8 +2,6 @@
 import time
 import signal
 import sys
-from flask import Flask
-from gui import gui
 
 from classes.Pump import Pump
 from classes.Moisture import Moisture
@@ -23,20 +21,18 @@ if __name__ == '__main__':     # Program start from here
 
     signal.signal(signal.SIGTERM, signal_term_handler)
 
-    gui.run(debug=True, host="0.0.0.0") # gui app
+    mgrGPIO = ManagerGPIO()
+    pumpA = Pump(11, 5) # pin and duration
+    moist1 = Moisture(13) # pin
+    try:
+        while True:
+            if not moist1.isMoisty():                
+                pumpA.execute()
 
-    # mgrGPIO = ManagerGPIO()
-    # pumpA = Pump(11, 5) # pin and duration
-    # moist1 = Moisture(13) # pin
-    # try:
-    #     while True:
-    #         if not moist1.isMoisty():                
-    #             pumpA.execute()
+            time.sleep(300) # check again after 5 minutes
 
-    #         time.sleep(300) # check again after 5 minutes
-
-    #     # end while
-    # except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
-    #     destroy()
+        # end while
+    except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
+        destroy()
 
  
