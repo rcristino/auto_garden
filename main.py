@@ -43,9 +43,10 @@ def control():
         if not moist1.isMoisty():  
             _logger.info("MOISTURE 1 is too dry, run PUMP A")          
             pumpA.execute()
-            _logger.info("PUMP A stopped") 
-
-        time.sleep(5) # check again after 5 minutes
+            _logger.info("PUMP A stopped")
+            
+        time.sleep(5)
+        ## time.sleep(300) # check again after 5 minutes
     # end while
 
 if __name__ == '__main__':     # Program start from here
