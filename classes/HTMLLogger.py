@@ -134,7 +134,7 @@ class HTMLLogger(logging.Logger):
     def __init__(self,
                  name="html_logger",
                  level=logging.DEBUG,
-                 filename="log.html", mode='w',
+                 filename="index.html", mode='w',
                  title="HTML Logger", version="1.0.0"):
         super().__init__(name, level)
         f = HTMLFormatter()

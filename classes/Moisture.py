@@ -12,7 +12,7 @@ class Moisture:
 
     def destroy(self):
         GPIO.remove_event_detect(self.pin)
-        print("moisture DESTROY: " + str(self.pin))
+        print("moisture: DESTROY: " + str(self.pin))
 
     def setup(self):
         GPIO.setup(self.pin, GPIO.IN)   # Set pin mode is input
@@ -20,14 +20,14 @@ class Moisture:
         GPIO.add_event_detect(self.pin, GPIO.BOTH, bouncetime=300)
         GPIO.add_event_callback(self.pin, self.checkMoisture)
         self.checkMoisture(self.pin)
-        print("moisture INIT: " + str(self.pin))
+        print("moisture: INIT: " + str(self.pin))
 
     def checkMoisture(self, pin):
         if GPIO.input(pin):
-            print("moisture DETECTED: " + str(self.pin)) 
+            print("moisture: DETECTED: " + str(self.pin)) 
             self.moisty = True
         else:
-            print("moisture NOT DETECTED: " + str(self.pin)) 
+            print("moisture: NOT DETECTED: " + str(self.pin)) 
             self.moisty = False
 
     def isMoisty(self):

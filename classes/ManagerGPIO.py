@@ -6,8 +6,8 @@ class ManagerGPIO:
     def __init__(self):
         GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)       # Numbers GPIOs by physical location
-        print("ManagerGPIO INIT")
+        print("managerGPIO: INIT")
 
     def destroy(self):
         GPIO.cleanup()
-        print("ManagerGPIO DESTROY")
+        print("managerGPIO: DESTROY")
