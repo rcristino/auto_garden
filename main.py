@@ -2,6 +2,7 @@
 import time
 import signal
 import sys
+import os
 import logging
 import http.server
 import socketserver
@@ -39,15 +40,24 @@ def destroy():
     sys.exit(0)
 
 def control():
+    attempts = 0
     while True:
         if not moist1.isMoisty():  
             _logger.info("MOISTURE 1 is too dry, run PUMP A")          
             pumpA.execute()
             _logger.info("PUMP A stopped")
-            
+            attempts = attempts + 1
+        else:
+            attempts = 0
+
+        if attempts > 5:
+            _logger.error("ERROR: Many attempts to use the pump but no water")
+            break        
+
         time.sleep(5)
         ## time.sleep(300) # check again after 5 minutes
     # end while
+    os.kill(os.getpid(), signal.SIGTERM)
 
 if __name__ == '__main__':     # Program start from here
 
