@@ -6,7 +6,6 @@ Usage:
 """
 
 import logging
-import time
 import datetime
 
 #: HTML header (starts the document
@@ -69,7 +68,6 @@ _END_OF_DOC_FMT = """</table>
 _MSG_FMT = """
 <tr>
 <td width="200">%(timestamp)s</td>
-<td width="100">%(time)s</td>
 <td class="%(class)s"><pre>%(msg)s</pre></td>
 <tr>
 """
@@ -105,7 +103,6 @@ class HTMLFormatter(logging.Formatter):
 
     def __init__(self):
         super().__init__()
-        self._start_time = time.time()
 
     def format(self, record):
         try:
@@ -113,8 +110,6 @@ class HTMLFormatter(logging.Formatter):
         except KeyError:
             class_name = "info"
 
-        t = time.time() - self._start_time
-        
         timestamp = '{:%Y-%b-%d %H:%M:%S}'.format(datetime.datetime.now())
 
         # handle '<' and '>' (typically when logging %r)
@@ -122,8 +117,7 @@ class HTMLFormatter(logging.Formatter):
         msg = msg.replace("<", "&#60")
         msg = msg.replace(">", "&#62")
 
-        return _MSG_FMT % {"class": class_name, "time": "%.4f" % t,
-                       "msg": msg, "timestamp": timestamp}
+        return _MSG_FMT % {"class": class_name, "msg": msg, "timestamp": timestamp}
 
 
 class HTMLLogger(logging.Logger):
