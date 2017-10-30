@@ -33,7 +33,9 @@ def destroy():
     global _httpd
 
     pumpA.destroy()
+    pumpB.destroy()
     moist1.destroy()
+    moist2.destroy()
     mgrGPIO.destroy()
     _httpd.server_close()
     _logger.info("APP ended")
@@ -49,13 +51,21 @@ def control():
             attempts = attempts + 1
         else:
             attempts = 0
+        
+        if not moist2.isMoisty():  
+            _logger.info("MOISTURE 2 is too dry, run PUMP B")          
+            pumpB.execute()
+            _logger.info("PUMP B stopped")
+            attempts = attempts + 1
+        else:
+            attempts = 0
 
-        if attempts > 5:
+        if attempts > 10:
             _logger.error("ERROR: Many attempts to use the pump but no water")
             break        
 
-        time.sleep(5)
-        ## time.sleep(300) # check again after 5 minutes
+        time.sleep(300) # check again after 5 minutes
+
     # end while
     os.kill(os.getpid(), signal.SIGTERM)
 
@@ -70,9 +80,10 @@ if __name__ == '__main__':     # Program start from here
 
     signal.signal(signal.SIGTERM, signal_term_handler)
     mgrGPIO = ManagerGPIO()
-    pumpA = Pump(11, 5) # pin and duration
+    pumpA = Pump(11, 3) # pin and duration in seconds
+    pumpB = Pump(37, 3) # pin and duration in seconds
     moist1 = Moisture(13) # pin
-
+    moist2 = Moisture(36) # pin
     _logger.info("APP initialized")
 
     try:
