@@ -64,6 +64,7 @@ def control():
             _logger.error("ERROR: Many attempts to use the pump but no water")
             break        
 
+        # time.sleep(5) # testing the system
         time.sleep(300) # check again after 5 minutes
 
     # end while
@@ -80,8 +81,8 @@ if __name__ == '__main__':     # Program start from here
 
     signal.signal(signal.SIGTERM, signal_term_handler)
     mgrGPIO = ManagerGPIO()
-    pumpA = Pump(11, 3) # pin and duration in seconds
-    pumpB = Pump(37, 3) # pin and duration in seconds
+    pumpA = Pump(11, 5) # pin and duration in seconds
+    pumpB = Pump(37, 5) # pin and duration in seconds
     moist1 = Moisture(13) # pin
     moist2 = Moisture(36) # pin
     _logger.info("APP initialized")
