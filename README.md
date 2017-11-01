@@ -31,5 +31,6 @@ The logging where is the watering activity is tracked can be reach in any browse
 Watering intervals and pins configuration are configured in main.py file
 
 ## References
-[modmypi](https://www.modmypi.com/blog/raspberry-pi-plant-pot-moisture-sensor-with-email-notification-tutorial)
-[pi4j](http://pi4j.com/pins/model-2b-rev1.html)
+
+1. [modmypi](https://www.modmypi.com/blog/raspberry-pi-plant-pot-moisture-sensor-with-email-notification-tutorial)
+2. [pi4j](http://pi4j.com/pins/model-2b-rev1.html)
