@@ -1,6 +1,7 @@
 # Auto-Garden watering system
 
 ## The Goal
+
 The goal is to create a watering system which monitors the moisture level from the ground and when the level is too low, it waters the plants.
 
 All watering activity should be tracked and easily accessible. It should include safety guards not to allow the pumps run with an empty deposit or in case the watering activity has no effect on the moisture level.
