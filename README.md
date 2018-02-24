@@ -8,6 +8,8 @@ All watering activity should be tracked and easily accessible. It should include
 
 The entire system shall be self contained and portable.
 
+![alt text](https://github.com/rcristino/auto_garden/blob/master/auto_garden.jpg)
+
 ## The components
 
  1. Two plactic boxes, one works as a water tank and the second to store the electric components
