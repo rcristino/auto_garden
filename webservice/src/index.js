@@ -9,8 +9,12 @@ function failFast(msg, code) {
 
 if (!process.env.MONGO_PASSWD) failFast("Missing env MONGO_PASSWD", MONGO_CONNEXION_ISSUE)
 
+const mongoURL = `mongodb://auto_garden:${process.env.MONGO_PASSWD}@davdtests-shard-00-00-x5mnt.mongodb.net:27017,davdtests-shard-00-01-x5mnt.mongodb.net:27017,davdtests-shard-00-02-x5mnt.mongodb.net:27017/test?ssl=true&replicaSet=davdTests-shard-0&authSource=admin`
+
+console.log(`Mongo URL: ${mongoURL}`)
+
 fastify.register(require('fastify-mongodb'), {
-  url: `mongodb://auto_garden:${process.env.MONGO_PASSWD}@davdtests-shard-00-00-x5mnt.mongodb.net:27017,davdtests-shard-00-01-x5mnt.mongodb.net:27017,davdtests-shard-00-02-x5mnt.mongodb.net:27017/test?ssl=true&replicaSet=davdTests-shard-0&authSource=admin`
+  url: mongoURL
 })
 
 fastify.get('/', function (request, reply) {
