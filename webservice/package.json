@@ -17,6 +17,7 @@
   "homepage": "https://github.com/rcristino/auto_garden#readme",
   "dependencies": {
     "fastify": "^1.2.1",
+    "fastify-mongodb": "^0.6.0",
     "mongodb": "^3.0.6"
   }
 }
