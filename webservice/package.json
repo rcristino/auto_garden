@@ -1,0 +1,21 @@
+{
+  "name": "webapp",
+  "version": "1.0.0",
+  "description": "A webapp for Ricardo's Pi plants project.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rcristino/auto_garden.git"
+  },
+  "author": "David Rueda",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rcristino/auto_garden/issues"
+  },
+  "homepage": "https://github.com/rcristino/auto_garden#readme",
+  "dependencies": {
+    "fastify": "^1.2.1"
+  }
+}
