@@ -26,13 +26,13 @@ fastify.get('/log', function (request, reply) {
       return reply.send(err)
     }
 
-    col.find({}, (err, result) => {
+    col.find({}).toArray((err, items) => {
       if (err) {
         pino.error(err)
         return reply.send(err)
       }
 
-      reply.send(result)
+      reply.send(items)
     })
   })
 })
