@@ -18,8 +18,23 @@ fastify.register(require('fastify-mongodb'), {
   url: mongoURL
 })
 
-fastify.get('/', function (request, reply) {
-  reply.send({ hello: 'world' })
+fastify.get('/log', function (request, reply) {
+  const db = this.mongo.db
+  db.collection('logs', (err, col) => {
+    if (err) {
+      pino.error(err)
+      return reply.send(err)
+    }
+
+    col.find({}, (err, result) => {
+      if (err) {
+        pino.error(err)
+        return reply.send(err)
+      }
+
+      reply.send(result)
+    })
+  })
 })
 
 fastify.post('/log', function (request, reply) {
@@ -39,6 +54,11 @@ fastify.post('/log', function (request, reply) {
     }
 
     col.insert(payload, (err, result) => {
+      if (err) {
+        pino.error(err)
+        return reply.send(err)
+      }
+
       reply.send(result)
     })
   })
