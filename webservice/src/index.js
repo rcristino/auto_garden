@@ -24,8 +24,8 @@ fastify.get('/', function (request, reply) {
 
 fastify.post('/log', function (request, reply) {
 
-  pino.info(request.body)
-  const payload = JSON.parse(request.body)
+  pino.info(typeof request.body)
+  const payload = request.body
 
   pino.info('Going to store log.')
   pino.info(payload)
