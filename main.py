@@ -12,14 +12,20 @@ from classes.Pump import Pump
 from classes.Moisture import Moisture
 from classes.ManagerGPIO import ManagerGPIO
 from classes.HTMLLogger import HTMLLogger
+from classes.WebService import WebService
 
 #: Global instances
 _logger = None
 _httpd = None
 _port = 8000
+_websvc = None
+
 
 def setup(title, version, filename="index.html", mode='w', level=logging.DEBUG):
     global _logger
+    global _websvc
+    if _websvc is None:
+        _websvc = WebService('http://localhost:3000')
     if _logger is None:
         _logger = HTMLLogger(filename=filename, mode=mode, title=title, version=version, level=level)
 
@@ -41,21 +47,26 @@ def destroy():
     _logger.info("APP ended")
     sys.exit(0)
 
+
 def control():
     attempts = 0
     while True:
         if not moist1.isMoisty():  
-            _logger.info("MOISTURE 1 is too dry, run PUMP A")          
+            _logger.info("MOISTURE 1 is too dry, run PUMP A")
+            _websvc.log_pump({'moisture': '1', 'status': 'too_dry'})
             pumpA.execute()
             _logger.info("PUMP A stopped")
+            _websvc.log_pump({'pump': 'A', 'status': 'stopped'})
             attempts = attempts + 1
         else:
             attempts = 0
         
         if not moist2.isMoisty():  
-            _logger.info("MOISTURE 2 is too dry, run PUMP B")          
+            _logger.info("MOISTURE 2 is too dry, run PUMP B")
+            _websvc.log_pump({'moisture': '2', 'status': 'too_dry'})
             pumpB.execute()
             _logger.info("PUMP B stopped")
+            _websvc.log_pump({'pump': 'B', 'status': 'stopped'})
             attempts = attempts + 1
         else:
             attempts = 0
@@ -70,6 +81,7 @@ def control():
     # end while
     os.kill(os.getpid(), signal.SIGTERM)
 
+
 if __name__ == '__main__':     # Program start from here
 
     setup("Auto-Garden watering system", "v1.0-alpha")
@@ -81,10 +93,10 @@ if __name__ == '__main__':     # Program start from here
 
     signal.signal(signal.SIGTERM, signal_term_handler)
     mgrGPIO = ManagerGPIO()
-    pumpA = Pump(11, 5) # pin and duration in seconds
-    pumpB = Pump(37, 5) # pin and duration in seconds
-    moist1 = Moisture(13) # pin
-    moist2 = Moisture(36) # pin
+    pumpA = Pump(11, 5)  # pin and duration in seconds
+    pumpB = Pump(37, 5)  # pin and duration in seconds
+    moist1 = Moisture(13)  # pin
+    moist2 = Moisture(36)  # pin
     _logger.info("APP initialized")
 
     try:
@@ -95,6 +107,3 @@ if __name__ == '__main__':     # Program start from here
         _httpd.serve_forever()
     except KeyboardInterrupt:  # When 'Ctrl+C' is pressed, the child program destroy() will be  executed.
         destroy()
-
-
- 
