@@ -19,7 +19,7 @@ class Moisture:
         print("moisture: INIT: " + str(self.pin))
 
     def isMoisty(self):
-        print('Moisty value: ' + GPIO.input(self.pin))
+        print('Moisty value: {0}'.format(GPIO.input(self.pin)))
         if GPIO.input(self.pin):
             print("moisture: NOT DETECTED: " + str(self.pin)) 
             return False
