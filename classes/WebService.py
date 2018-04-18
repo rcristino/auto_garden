@@ -8,10 +8,11 @@ class WebService:
         self.url = url
 
     def log_pump(self, msg):
-        
+
         print('POST WebService - ')
         print(msg)
         print('- POST END')
 
-        r = requests.post(self.url + '/log', msg)
-        return r.text
+        r = requests.post(self.url + '/log', data=msg)
+        print(r.text)
+        return r
