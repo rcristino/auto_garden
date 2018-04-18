@@ -13,6 +13,6 @@ class WebService:
         print(msg)
         print('- POST END')
 
-        r = requests.post(self.url + '/log', data=msg)
+        r = requests.post(self.url + '/log', json=msg)
         print(r.text)
         return r
