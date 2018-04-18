@@ -24,7 +24,6 @@ fastify.get('/', function (request, reply) {
 
 fastify.post('/log', function (request, reply) {
 
-  pino.info(typeof request.body)
   const payload = request.body
 
   pino.info('Going to store log.')
