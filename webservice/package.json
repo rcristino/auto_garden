@@ -18,6 +18,7 @@
   "dependencies": {
     "fastify": "^1.2.1",
     "fastify-mongodb": "^0.6.0",
-    "mongodb": "^3.0.6"
+    "mongodb": "^3.0.6",
+    "pino": "^4.16.1"
   }
 }

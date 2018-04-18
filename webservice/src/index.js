@@ -1,9 +1,10 @@
 const fastify = require('fastify')()
+const pino = require('pino')()
 
 const MONGO_CONNEXION_ISSUE = 2
 
 function failFast(msg, code) {
-  console.error(msg)
+  pino.error(msg)
   process.exit(code)
 }
 
@@ -11,7 +12,7 @@ if (!process.env.MONGO_PASSWD) failFast("Missing env MONGO_PASSWD", MONGO_CONNEX
 
 const mongoURL = `mongodb+srv://auto_garden:${process.env.MONGO_PASSWD}@davdtests-x5mnt.mongodb.net/test`
 
-console.log(`Mongo URL: ${mongoURL}`)
+pino.info(`Mongo URL: ${mongoURL}`)
 
 fastify.register(require('fastify-mongodb'), {
   url: mongoURL
@@ -22,13 +23,20 @@ fastify.get('/', function (request, reply) {
 })
 
 fastify.post('/log', function (request, reply) {
-  console.log(request)
+
+  const payload = JSON.parse(request.body)
+
+  pino.info('Going to store log.')
+  pino.info(payload)
 
   const db = this.mongo.db
   db.collection('logs', (err, col) => {
-    if (err) return reply.send(err)
+    if (err) {
+      pino.error(err)
+      return reply.send(err)
+    }
 
-    col.insert(request.payload.data, (err, result) => {
+    col.insert(payload, (err, result) => {
       reply.send(result)
     })
   })
@@ -37,5 +45,5 @@ fastify.post('/log', function (request, reply) {
 // RUN SERVER
 fastify.listen(process.env.WEBSVC_PORT || 3000, '0.0.0.0', function (err) {
   if (err) throw err
-  console.log(`server listening on ${fastify.server.address().port}`)
+  pino.info(`server listening on ${fastify.server.address().port}`)
 })
