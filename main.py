@@ -75,8 +75,8 @@ def control():
             _logger.error("ERROR: Many attempts to use the pump but no water")
             break        
 
-        # time.sleep(5) # testing the system
-        time.sleep(300) # check again after 5 minutes
+        # time.sleep(5)  # testing the system
+        time.sleep(60)  # check again after 5 minutes
 
     # end while
     os.kill(os.getpid(), signal.SIGTERM)
