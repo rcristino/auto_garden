@@ -24,7 +24,9 @@ fastify.get('/', function (request, reply) {
 
 fastify.post('/log', function (request, reply) {
 
-  const payload = request.body
+  const payload = Object.assign(request.body, {
+    websvc_time: Date.now()
+  })
 
   pino.info('Going to store log.')
   pino.info(payload)
