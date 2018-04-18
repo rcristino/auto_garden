@@ -22,7 +22,7 @@ fastify.get('/', function (request, reply) {
 })
 
 fastify.post('/log', function (request, reply) {
-  console.log(request.payload)
+  console.log(request)
 
   const db = this.mongo.db
   db.collection('logs', (err, col) => {
